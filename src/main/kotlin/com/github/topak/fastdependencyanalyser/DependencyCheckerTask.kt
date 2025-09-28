@@ -69,8 +69,24 @@ abstract class DependencyCheckerTask : DefaultTask() {
   }
 
   private fun parseModules(config: DependencyAnalyserConfig): List<Module> {
-    val settingsFile = rootDir.resolve("settings.gradle")
-    val allModuleNames = settingsFile.readLines()
+    val allModuleNames = try {
+      val settingsFile = rootDir.resolve("settings.gradle")
+      val settingsFileKts = rootDir.resolve("settings.gradle.kts")
+
+      val actualSettingsFile = when {
+        settingsFile.exists() -> settingsFile
+        settingsFileKts.exists() -> settingsFileKts
+        else -> {
+          println("No settings.gradle or settings.gradle.kts file found in ${rootDir.absolutePath}")
+          return emptyList()
+        }
+      }
+
+      actualSettingsFile.readLines()
+    } catch (e: Exception) {
+      println("Failed to read settings file: ${e.message}")
+      return emptyList()
+    }
       .filter { it.startsWith("include") }
       .map { line ->
         line
