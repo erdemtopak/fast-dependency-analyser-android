@@ -255,10 +255,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Changelog
 
-### 1.0.0
-- Initial release
-- Bytecode analysis for dependency usage detection
-- Automatic dependency cleanup with build validation
-- Support for multi-module projects
-- Configurable exclusions
-- Comprehensive reporting
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and releases.
