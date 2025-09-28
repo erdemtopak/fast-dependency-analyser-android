@@ -1,0 +1,7 @@
+excluded-modules:
+  - "buildSrc"
+
+excluded-dependencies:
+  # Example: if you want to keep specific dependencies even if unused
+  # "app":
+  #   - "implementation projects.library.tracker"
