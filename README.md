@@ -24,7 +24,7 @@ A fast and efficient Gradle plugin for analyzing and automatically removing unus
 
 ```kotlin
 plugins {
-    id("com.github.topak.fast-dependency-analyser") version "1.0.0"
+    id("com.github.topak.fast-dependency-analyser") version "0.0.1"
 }
 ```
 
@@ -36,7 +36,7 @@ buildscript {
         maven { url = uri("https://jitpack.io") }
     }
     dependencies {
-        classpath("com.github.topak:fast-dependency-analyser:1.0.0")
+        classpath("com.github.topak:fast-dependency-analyser:0.0.1")
     }
 }
 
