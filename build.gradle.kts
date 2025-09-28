@@ -1,17 +1,11 @@
 plugins {
     kotlin("jvm") version "1.9.10"
-    `gradle-plugin-publish`
     `maven-publish`
-    id("java-gradle-plugin")
+    `java-gradle-plugin`
 }
 
 group = "com.github.topak"
 version = "1.0.0"
-
-repositories {
-    gradlePluginPortal()
-    mavenCentral()
-}
 
 dependencies {
     implementation(kotlin("stdlib"))
