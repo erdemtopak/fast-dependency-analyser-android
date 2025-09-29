@@ -1,6 +1,6 @@
 # FastDependencyAnalyser
 
-[![](https://jitpack.io/v/topak/fast-dependency-analyser.svg)](https://jitpack.io/#topak/fast-dependency-analyser)
+[![](https://jitpack.io/v/erdemtopak/fast-dependency-analyser-android.svg)](https://jitpack.io/#erdemtopak/fast-dependency-analyser-android)
 
 A fast and efficient Gradle plugin for analyzing and automatically removing unused dependencies in Android/Kotlin projects using bytecode analysis.
 
@@ -154,14 +154,15 @@ testImplementation(libs.junit)                 // Test dependencies
 ## How It Works
 
 1. **Compilation Check**: Ensures all modules are compiled and class files are available
-2. **Dependency Parsing**: Extracts dependency declarations from `build.gradle` files
-3. **Bytecode Analysis**: Uses ASM to analyze compiled classes and extract:
+2. **Dependency Parsing**: Extracts dependency declarations from both `build.gradle` and `build.gradle.kts` files
+3. **Settings File Support**: Reads module configurations from `settings.gradle` or `settings.gradle.kts`
+4. **Bytecode Analysis**: Uses ASM to analyze compiled classes and extract:
    - Referenced classes in method calls, field accesses, type usage
    - Generic type parameters and signatures
    - Inheritance relationships
-4. **Cross-Module Analysis**: Maps project dependencies to their exposed classes
-5. **Usage Detection**: Matches referenced classes against dependency-provided classes
-6. **Smart Cleanup**: Uses binary search for efficient removal with build validation
+5. **Cross-Module Analysis**: Maps project dependencies to their exposed classes
+6. **Usage Detection**: Matches referenced classes against dependency-provided classes
+7. **Smart Cleanup**: Uses binary search for efficient removal with build validation
 
 ## Best Practices
 
