@@ -19,7 +19,7 @@ class BuildValidator(private val rootDir: File) {
   }
 
   fun quickCompileCheck(moduleName: String): BuildResult {
-    val moduleAssembleTask = ":$moduleName:assembleDebug"
+    val moduleAssembleTask = ":$moduleName:compileDebug"
     val moduleTestCompileTask = ":$moduleName:compileDebugUnitTestKotlin"
     return executeBuild(listOf(moduleAssembleTask, moduleTestCompileTask))
   }

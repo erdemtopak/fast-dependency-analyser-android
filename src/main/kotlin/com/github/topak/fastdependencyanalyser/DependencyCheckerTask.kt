@@ -5,6 +5,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
+import org.gradle.api.internal.artifacts.dsl.dependencies.DependenciesExtensionModule.module
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Optional
@@ -41,7 +42,7 @@ abstract class DependencyCheckerTask : DefaultTask() {
   @Input
   val failOnUnused: Boolean = project.hasProperty("failOnUnused") && project.property("failOnUnused").toString().toBoolean()
 
-  private val depRegex = Regex("^(implementation|api|testImplementation)\\s*")
+  private val depRegex = Regex("^(implementation|api|testImplementation)\\s*\\(?\\s*")
 
   init {
     if (!fastMode) {
@@ -92,6 +93,9 @@ abstract class DependencyCheckerTask : DefaultTask() {
         line
           .replace("include", "")
           .replace("'", "")
+          .replace("\"", "")
+          .replace("(", "")
+          .replace(")", "")
           .trim()
           .substring(1)
       }
@@ -165,18 +169,16 @@ abstract class DependencyCheckerTask : DefaultTask() {
 
     // Handle project(":module:name") syntax
     val sanitizedDependency = if (fullDependencyName.startsWith("project(")) {
+      // Extract project path from project(":library-core") -> :library-core
       val projectPath = fullDependencyName
-        .removePrefix("project(")
-        .removeSuffix(")")
+        .substringAfter("project(")
+        .substringBefore(")")
+        .replace("\"", "")
+        .replace("'", "")
+        .replace(":", "")
         .trim()
-        .removePrefix("\"")
-        .removePrefix("'")
-        .removeSuffix("\"")
-        .removeSuffix("'")
-        .removePrefix(":")
 
-      // Convert ":library:location:api" to "projects.library.location.api"
-      "projects." + projectPath.replace(":", ".")
+      projectPath
     } else { // Handle projects.library.name syntax
       fullDependencyName
         .substringAfter("(")
